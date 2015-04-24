@@ -1,6 +1,6 @@
 
 ==============================
-  Proyecto programacion Lina 
+  Proyecto programación Lina 
 ==============================
 
  Aqui expondremos los cambios
