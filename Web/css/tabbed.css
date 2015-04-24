@@ -1,0 +1,72 @@
+body{
+    background-color: white;
+    background: url(../imagenes/Wallpaper.png) no-repeat center center fixed;
+    background-size: cover;
+    margin: 0%;
+    width: 100%;  
+}
+
+header {
+    background-color: black;
+    background-size: 100% auto;
+    box-shadow: inset 0px 1px 0px #202020 , 0px     2px 0px 0px #101010 , 0px 2px 5px black;
+    width: 100%;
+    overflow: visible;
+    text-align: center; 
+    clear: both;   
+}
+
+header img {
+    max-width: 100%;  
+}
+
+section {
+    margin: 1%;
+    width: auto;
+    height: 450px;
+    
+}
+
+aside {
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    float: left;
+    width: 16%;
+    height: 300px; 
+    text-align: center;
+    border-collapse: separate;    
+}
+
+aside p{
+    padding: 5%;   
+    text-align: center;
+}
+
+article {
+    float: right;
+    width: 80%;
+    height: 300px;    
+    text-align: center;
+}
+
+
+input {
+    width: 500px;
+    background: darkgoldenrod;
+    padding: 8px 15px 10px;
+    border: 1px solid black;
+    cursor: pointer;
+    font-size: 10px;
+    font-family: Oswald, sans-serif;
+    letter-spacing: 5px;
+    text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 10px;  
+    min-width: 50%;
+    max-width: 100%;   
+}
+
+input:hover, input:focus {
+    color: black;
+    box-shadow: inset 0px 1px 0px #202020 , 0px     2px 0px 0px #101010 , 0px 2px 5px black;
+}
