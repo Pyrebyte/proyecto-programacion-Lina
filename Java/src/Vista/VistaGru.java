@@ -1,4 +1,4 @@
-package Vista;
+package vista;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -13,6 +13,9 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 
 public class VistaGru extends JPanel{
+	private JButton insertar;
+	private JButton eliminar;
+	private JList gruposList;
 	
 	public VistaGru(){
 		setLayout(null);
@@ -41,8 +44,8 @@ public class VistaGru extends JPanel{
 		add(panel_1);
 		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
+		gruposList = new JList();
+		gruposList.setModel(new AbstractListModel() {
 			String[] values = new String[] {"1", "2", "3", "4", "5"};
 			public int getSize() {
 				return values.length;
@@ -51,15 +54,15 @@ public class VistaGru extends JPanel{
 				return values[index];
 			}
 		});
-		panel_1.add(list_1);
+		panel_1.add(gruposList);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 170, 180, 161);
 		add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JList list_2 = new JList();
-		list_2.setModel(new AbstractListModel() {
+		JList empleadosList = new JList();
+		empleadosList.setModel(new AbstractListModel() {
 			String[] values = new String[] {"1", "2", "3", "4", "5"};
 			public int getSize() {
 				return values.length;
@@ -68,27 +71,27 @@ public class VistaGru extends JPanel{
 				return values[index];
 			}
 		});
-		panel_2.add(list_2);
+		panel_2.add(empleadosList);
 		
-		JButton btnNewButton = new JButton(">");
-		btnNewButton.addActionListener(new ActionListener() {
+		insertar = new JButton(">");
+		insertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(241, 170, 50, 50);
-		add(btnNewButton);
+		insertar.setBounds(241, 170, 50, 50);
+		add(insertar);
 		
-		JButton btnNewButton_1 = new JButton("<");
-		btnNewButton_1.setBounds(241, 265, 50, 50);
-		add(btnNewButton_1);
+		eliminar = new JButton("<");
+		eliminar.setBounds(241, 265, 50, 50);
+		add(eliminar);
 		
-		JLabel lblEmpleados = new JLabel("Grupos: ");
-		lblEmpleados.setBounds(10, 11, 80, 14);
-		add(lblEmpleados);
+		JLabel gruposL = new JLabel("Grupos: ");
+		gruposL.setBounds(10, 11, 80, 14);
+		add(gruposL);
 		
-		JLabel lblProyectos = new JLabel("Empleados: ");
-		lblProyectos.setBounds(10, 151, 80, 14);
-		add(lblProyectos);
+		JLabel empleadosL = new JLabel("Empleados: ");
+		empleadosL.setBounds(10, 151, 80, 14);
+		add(empleadosL);
 		
 		
 	}
