@@ -8,17 +8,17 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
-public class funcionesDB {
+public class FuncionesDB {
 
 	private static final String DRIVER = "com.mysql.jdbc.Driver"; 
-	private static final String URL = "jdbc:mysql://localhost/ejemplo_libros"; 
-	private static final String USUARIO = "root"; 
-	private static final String CLAVE = "root";
+	private static final String URL = "jdbc:mysql://localhost/proyecto_lina"; 
+	private static final String USUARIO = "usuario_proyecto"; 
+	private static final String CLAVE = "pass";
 	
 	private Connection conexion; 
     private Statement sentencia; 
     
-    public funcionesDB() {
+    public FuncionesDB() {
     	try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException e) {

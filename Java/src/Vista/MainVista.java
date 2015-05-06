@@ -6,12 +6,16 @@ import javax.swing.JTabbedPane;
 
 
 public class MainVista extends JTabbedPane {
+	public VistaPro vPro;
+	public VistaEmp vEmp;
+	public VistaGru vGru;
+	
 	
 	public MainVista() {
 		
-		VistaPro vPro = new VistaPro();
-		VistaEmp vEmp = new VistaEmp();
-		VistaGru vGru = new VistaGru();
+		vPro = new VistaPro();
+		vEmp = new VistaEmp();
+		vGru = new VistaGru();
 		
 		setBackground(Color.LIGHT_GRAY);
 		

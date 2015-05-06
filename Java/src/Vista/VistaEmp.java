@@ -7,14 +7,11 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
@@ -27,20 +24,18 @@ public class VistaEmp extends JPanel {
 	public JButton confirm;
 	public JButton clean;
 	
-	//empieza vistalista
-	
 	protected JPanel lista;
-	protected JButton info;
-	protected JButton eliminar;
-	@SuppressWarnings("rawtypes")
-	protected JList list;
+	public DefaultListModel listModel;
+	public JButton info;
+	public JButton eliminar;
+	public JList list;
 	
 	public String getNombre(){return nombreT.getText();}
 	public String getApellido(){return apellidoT.getText();}
 	public String getDni(){return dniT.getText();}
 	public String getSueldo(){return sueldoT.getText();}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	
 	public VistaEmp() {
 		setLayout(new GridLayout(0,2));
 		formulario = new JPanel(null);
@@ -91,24 +86,16 @@ public class VistaEmp extends JPanel {
 		
 		formulario.setBackground(Color.gray);
 		
-		//empieza listavista:
+		//empieza lista:
 		lista = new JPanel(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(45, 11, 180, 260);
 		lista.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
-
-		list = new JList(new String[] { "1", "2" });
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1", "2", "3", "4", "5"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+		listModel = new DefaultListModel();
+		list = new JList(listModel);
 		panel.add(list);
 
 		info = new JButton("+ INFO");
@@ -126,7 +113,17 @@ public class VistaEmp extends JPanel {
 		
 	}
 	
-	public void addActionListener(ActionListener e){
-		
+	public void limpiar(){
+		this.nombreT.setText("");
+		this.apellidoT.setText("");
+		this.dniT.setText("");
+		this.sueldoT.setText("");
+	}
+	
+	public void registrarControlador(ActionListener e){
+		confirm.addActionListener(e);
+		clean.addActionListener(e);
+		eliminar.addActionListener(e);
+		info.addActionListener(e);
 	}
 }

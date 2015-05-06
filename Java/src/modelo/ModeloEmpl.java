@@ -28,7 +28,10 @@ public class ModeloEmpl {
 	public float getSueldo(){return this.sueldo;}
 	
 	public ModeloEmpl(){
-		
+		dni = null;
+		nombre = null;
+		apellido = null;
+		sueldo = 0;
 	}
 	
 	public ModeloEmpl(String dni , String nombre , String apellido , float sueldo){
