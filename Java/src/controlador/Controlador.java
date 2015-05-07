@@ -65,6 +65,7 @@ public class Controlador implements ActionListener {
 		nombre = empV.getNombre();
 		apellido = empV.getApellido();
 		dni = empV.getDni();
+		//comprobarDni(dni);
 		try{
 			sueldo = Float.valueOf(empV.getSueldo());
 		}catch(NumberFormatException e){
