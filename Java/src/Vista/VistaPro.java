@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -18,15 +19,19 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class VistaPro extends JPanel {
 	protected JPanel form;
-	private JTextField nombre;
-	private JTextField presupuesto;
+	public JTextField nombre;
+	public JTextField presupuesto;
 
 	// empieza VistaLista:
 	protected JPanel lista;
-	protected JButton info;
-	protected JButton eliminar;
 	@SuppressWarnings("rawtypes")
-	protected JList list;
+	public JList list;
+	public DefaultListModel listModel;
+
+	public JButton info;
+	public JButton eliminar;
+	public JButton confirm;
+	public JButton limpiar;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VistaPro() {
@@ -62,17 +67,13 @@ public class VistaPro extends JPanel {
 		form.add(presupuesto);
 		presupuesto.setColumns(10);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(25, 205, 100, 23);
-		form.add(btnConfirmar);
+		confirm = new JButton("Confirmar");
+		confirm.setBounds(25, 205, 100, 23);
+		form.add(confirm);
 
-		JButton btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnLimpiar.setBounds(135, 205, 100, 23);
-		form.add(btnLimpiar);
+		limpiar = new JButton("Limpiar");
+		limpiar.setBounds(135, 205, 100, 23);
+		form.add(limpiar);
 
 		form.setBackground(Color.gray);
 
@@ -84,18 +85,8 @@ public class VistaPro extends JPanel {
 		lista.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 
-		list = new JList(new String[] { "1", "2" });
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] { "1", "2", "3", "4", "5" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		listModel = new DefaultListModel();
+		list = new JList(listModel);
 		panel.add(list);
 
 		info = new JButton("+ INFO");
@@ -117,4 +108,15 @@ public class VistaPro extends JPanel {
 
 	}
 
+	public void limpiar(){
+		this.nombre.setText("");
+		this.presupuesto.setText("");
+	}
+	
+	public void registrarControlador(ActionListener e){
+		confirm.addActionListener(e);
+		limpiar.addActionListener(e);
+		info.addActionListener(e);
+		eliminar.addActionListener(e);
+	}
 }

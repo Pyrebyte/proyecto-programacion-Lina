@@ -17,10 +17,10 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class VistaEmp extends JPanel {
 	protected JPanel formulario;
-	protected JTextField nombreT;
-	protected JTextField apellidoT;
-	protected JTextField dniT;
-	protected JTextField sueldoT;
+	public JTextField nombreT;
+	public JTextField apellidoT;
+	public JTextField dniT;
+	public JTextField sueldoT;
 	public JButton confirm;
 	public JButton clean;
 	

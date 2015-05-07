@@ -30,7 +30,19 @@ public class Controlador implements ActionListener {
 			empleadoDel(empV.list.getSelectedIndex());
 		}
 		if(e.getSource() == empV.info){
-			info(empV.list.getSelectedIndex());
+			empleadoInfo(empV.list.getSelectedIndex());
+		}
+		if (e.getSource() == proV.confirm){
+			proyectoConfirm();
+		}
+		if (e.getSource() == proV.limpiar){
+			proV.limpiar();
+		}
+		if (e.getSource() == proV.eliminar){
+			proyectoDel(proV.list.getSelectedIndex());
+		}
+		if (e.getSource() == proV.info){
+			proyectoInfo(proV.list.getSelectedIndex());
 		}
 	}
 	
@@ -40,39 +52,13 @@ public class Controlador implements ActionListener {
 		this.proV = pro;
 		this.fun = new FuncionesDB();
 		emp.registrarControlador(this);
-		actualizarLista();
+		actualizarEmp();
+		actualizarPro();
 		//gru.registrarControlador(this);
-		//pro.registrarControlador(this);
-		
+		pro.registrarControlador(this);
 	}
-	/* empleadoConfirm sin base de datos
-	private void empleadoConfirm(){
-		String dni = empV.getNombre();
-		String nombre = empV.getNombre();
-		String apellido = empV.getApellido();
-		String sueldo1 = empV.getSueldo();
-		float sueldo2;
-		
-		if(dni == ""){
-			JOptionPane.showMessageDialog(null, "Introduce un DNI.");
-			return;
-		}
-		if(nombre == ""){
-			JOptionPane.showMessageDialog(null, "Introduce un nombre.");
-			return;
-		}
-		if(apellido == ""){
-			JOptionPane.showMessageDialog(null, "Introduce un apellido.");
-			return;
-		}
-		try{
-			sueldo2 = Float.valueOf(sueldo1);
-		}catch(NumberFormatException e){
-			JOptionPane.showMessageDialog(null, "El sueldo no es un número válido.");
-			return;
-		}
-		sueldo2 = Float.valueOf(sueldo1);
-	}*/
+	
+	
 	private void empleadoConfirm(){
 		String nombre , apellido , dni;
 		float sueldo = 0;
@@ -84,22 +70,25 @@ public class Controlador implements ActionListener {
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "error: Sueldo no es un numero.\n"
 			, "Error", JOptionPane.ERROR_MESSAGE);
-			empV.limpiar();
+			empV.sueldoT.setText("");
 			return;
 		}
 		String operacion = "INSERT INTO empleado VALUES('"+dni+"','"+nombre+"','"+apellido+"','"+sueldo+"',null);";
 		fun.actualizar(operacion);
-		actualizarLista();
+		actualizarEmp();
 		empV.limpiar();
 	}
 	
 	private void empleadoDel(int index){
 		String dni = getDni(index);
-		fun.actualizar("DELETE FROM `proyecto_lina`.`empleado` WHERE `dni`='" + dni + "';");
-		actualizarLista();
+		if (!dni.equals("")){
+			fun.actualizar("DELETE FROM `proyecto_lina`.`empleado` WHERE `dni`='" + dni + "';");
+			actualizarEmp();
+		}else{JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún empleado.");}
+		
 	}
 	
-	private void info(int index){
+	private void empleadoInfo(int index){
 		String dni = getDni(index);
 		String info = "";
 		ResultSet res = fun.consultar("SELECT * FROM empleado WHERE dni = '" + dni + "';");
@@ -117,7 +106,61 @@ public class Controlador implements ActionListener {
 		JOptionPane.showMessageDialog(null, info);
 	}
 	
-	private void actualizarLista(){
+	private void proyectoConfirm(){
+		String nombre = proV.nombre.getText();
+		float presupuesto = 0;
+		try{
+			presupuesto = Float.valueOf(proV.presupuesto.getText());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "error: Presupuesto no es un numero.\n"
+					, "Error", JOptionPane.ERROR_MESSAGE);
+					proV.presupuesto.setText("");
+					return;
+		}
+		int cod = proCod();
+		if (cod == -1){
+			JOptionPane.showMessageDialog(null, "error: No se ha encontrado\n"+"ningún código disponible.\n"
+					, "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		String operacion = "INSERT INTO proyecto VALUES ('"+cod+"', '" + presupuesto + "', '"+nombre+"');";
+		fun.actualizar(operacion);
+		actualizarPro();
+		proV.limpiar();
+		
+	}
+
+	private void proyectoDel(int index){
+		int cod = getCod(index);
+		System.out.println(cod);
+		if (cod != -1){
+			fun.actualizar("DELETE FROM `proyecto_lina`.`proyecto` WHERE `cod`='"+cod+"';");
+			actualizarPro();
+		}else{JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún proyecto.");}
+		
+	}
+	
+	private void proyectoInfo(int index){
+		int cod = getCod(index);
+		String info = "";
+		ResultSet res; 
+		res = fun.consultar("SELECT * FROM proyecto WHERE cod = '"+cod+"';");
+		try {
+			while(res.next()){
+				info = "Codigo Interno: " + res.getInt("cod") + "\n"
+					  +"Nombre: " + res.getString("nombre") + "\n"
+					  +"Presupuesto: " + res.getString("presupuesto");
+			}
+		} catch (SQLException e) {}
+		if (info.equals("")){
+			info = "No se ha seleccionado ningún proyecto.";
+		}
+		JOptionPane.showMessageDialog(null, info);
+	}
+	
+	
+	//metodos internos:
+	private void actualizarEmp(){
 		int max = empV.listModel.getSize();
 		for (int i = 0; i<max; i++){
 			empV.listModel.removeElementAt(0);
@@ -129,6 +172,23 @@ public class Controlador implements ActionListener {
 			while(resultado.next()){
 				elemento = resultado.getString("nombre");
 				empV.listModel.addElement(elemento);
+		}
+		}catch(SQLException e){
+			
+		}
+	}
+	private void actualizarPro(){
+		int max = proV.listModel.getSize();
+		for (int i = 0; i<max; i++){
+			proV.listModel.removeElementAt(0);
+		}
+		String elemento;
+		ResultSet resultado;
+		try{
+			resultado = fun.consultar("SELECT * FROM proyecto");
+			while(resultado.next()){
+				elemento = resultado.getString("nombre");
+				proV.listModel.addElement(elemento);
 		}
 		}catch(SQLException e){
 			
@@ -147,5 +207,44 @@ public class Controlador implements ActionListener {
 		}catch(SQLException e){}
 		return dni;
 	}
-	
+	private int proCod(){
+		int cod = 1;
+		ResultSet codigos;
+		
+		try {
+			//todos los codigos:
+			codigos = fun.consultar("SELECT cod FROM proyecto ORDER BY cod");
+			while(codigos.next()){
+				//primer cod disponible:
+				/*================================
+				 * recorre todos los codigos HASTA
+				 * encontrar un numero entero
+				 * no usado como codigo.
+				 *=================================*/
+				if(cod != codigos.getInt("cod")){
+					return cod;
+				}
+				else{
+					cod++;
+				}
+			}
+			return cod;
+		} catch (SQLException e){return -1;}
+	}
+	private int getCod(int index){
+		ResultSet resultado;
+		int cod = -1;
+		try{
+			resultado = fun.consultar("SELECT * FROM proyecto");
+			for(int i = 0; resultado.next();i++){
+				if(index == i){
+					cod = resultado.getInt("cod");
+				}
+			}
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return cod;
+		
+	}
 }
