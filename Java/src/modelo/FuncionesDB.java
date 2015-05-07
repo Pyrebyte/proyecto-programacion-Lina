@@ -80,7 +80,7 @@ public class FuncionesDB {
 	} 
 	  
 	public ResultSet consultar(String consultaSQL) { 
-		 
+		
 	    ResultSet filas = null; 
 	    try {
 			filas = this.sentencia.executeQuery(consultaSQL);
