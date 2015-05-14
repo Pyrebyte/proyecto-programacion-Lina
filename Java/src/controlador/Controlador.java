@@ -54,6 +54,7 @@ public class Controlador implements ActionListener {
 		emp.registrarControlador(this);
 		actualizarEmp();
 		actualizarPro();
+		actualizarGru();
 		//gru.registrarControlador(this);
 		pro.registrarControlador(this);
 	}
@@ -77,6 +78,7 @@ public class Controlador implements ActionListener {
 		String operacion = "INSERT INTO empleado VALUES('"+dni+"','"+nombre+"','"+apellido+"','"+sueldo+"',null);";
 		fun.actualizar(operacion);
 		actualizarEmp();
+		actualizarGru();
 		empV.limpiar();
 	}
 	
@@ -85,6 +87,7 @@ public class Controlador implements ActionListener {
 		if (!dni.equals("")){
 			fun.actualizar("DELETE FROM `proyecto_lina`.`empleado` WHERE `dni`='" + dni + "';");
 			actualizarEmp();
+			actualizarGru();
 		}else{JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún empleado.");}
 		
 	}
@@ -162,10 +165,7 @@ public class Controlador implements ActionListener {
 	
 	//metodos internos:
 	private void actualizarEmp(){
-		int max = empV.listModel.getSize();
-		for (int i = 0; i<max; i++){
-			empV.listModel.removeElementAt(0);
-		}
+		empV.listModel.removeAllElements();
 		String elemento;
 		ResultSet resultado;
 		try{
@@ -179,10 +179,7 @@ public class Controlador implements ActionListener {
 		}
 	}
 	private void actualizarPro(){
-		int max = proV.listModel.getSize();
-		for (int i = 0; i<max; i++){
-			proV.listModel.removeElementAt(0);
-		}
+		proV.listModel.removeAllElements();
 		String elemento;
 		ResultSet resultado;
 		try{
@@ -191,9 +188,36 @@ public class Controlador implements ActionListener {
 				elemento = resultado.getString("nombre");
 				proV.listModel.addElement(elemento);
 		}
-		}catch(SQLException e){
-			
-		}
+		}catch(SQLException e){}
+	}
+	private void actualizarGru(){
+		gruV.modelEmp.removeAllElements();
+		gruV.modelEmpGru.removeAllElements();
+		gruV.modelGru.removeAllElements();
+		String elemento;
+		ResultSet resultadoEmp , resultadoGru , resultadoEmpGru;
+		try{
+			resultadoEmp = fun.consultar("SELECT * FROM empleado");
+			while(resultadoEmp.next()){
+				elemento = resultadoEmp.getString("nombre");
+				gruV.modelEmp.addElement(elemento);
+			}
+			resultadoGru = fun.consultar("SELECT * FROM grupo");
+			while(resultadoGru.next()){
+				elemento = resultadoGru.getString("nombre");
+				gruV.modelGru.addElement(elemento);
+			}
+			/*
+			resultadoEmpGru = fun.consultar("SELECT empleado.* , grupo.* empleado-grupo.*"
+										  + "FROM empleado, grupo, empleado-grupo"
+										  + "WHERE empleado.dni = empleado-grupo.persona_dni"
+										  + "AND grupo.cod = empleado-grupo.grupo_cod");
+			while(resultadoEmpGru.next()){
+				elemento = resultadoEmpGru.getString("");
+			}
+			*/
+		}catch(SQLException e){}
+		
 	}
 	private String getDni(int index){
 		ResultSet resultado;

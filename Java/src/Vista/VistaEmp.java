@@ -16,7 +16,7 @@ import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class VistaEmp extends JPanel {
-	protected JPanel formulario;
+	protected JPanel panelForm;
 	public JTextField nombreT;
 	public JTextField apellidoT;
 	public JTextField dniT;
@@ -24,7 +24,7 @@ public class VistaEmp extends JPanel {
 	public JButton confirm;
 	public JButton clean;
 	
-	protected JPanel lista;
+	protected JPanel panelLista;
 	public DefaultListModel listModel;
 	public JButton info;
 	public JButton eliminar;
@@ -38,60 +38,60 @@ public class VistaEmp extends JPanel {
 	
 	public VistaEmp() {
 		setLayout(new GridLayout(0,2));
-		formulario = new JPanel(null);
+		panelForm = new JPanel(null);
 		
 		JLabel nombreL = new JLabel("Nombre: ");
 		nombreL.setBounds(35, 55, 80, 14);
-		formulario.add(nombreL);
+		panelForm.add(nombreL);
 		
 		JLabel apellidoL = new JLabel("Apellido: ");
 		apellidoL.setBounds(35, 110, 80, 14);
-		formulario.add(apellidoL);
+		panelForm.add(apellidoL);
 		
 		JLabel dniL = new JLabel("DNI: ");
 		dniL.setBounds(35, 165, 80, 14);
-		formulario.add(dniL);
+		panelForm.add(dniL);
 		
 		JLabel sueldoL = new JLabel("Sueldo: ");
 		sueldoL.setBounds(35, 220, 80, 14);
-		formulario.add(sueldoL);
+		panelForm.add(sueldoL);
 		
 		confirm = new JButton("Confirmar");
 		confirm.setBounds(25, 275, 100, 23);
-		formulario.add(confirm);
+		panelForm.add(confirm);
 		
 		clean = new JButton("Limpiar");
 		clean.setBounds(135, 275, 100, 23);
-		formulario.add(clean);
+		panelForm.add(clean);
 		
 		nombreT = new JTextField();
 		nombreT.setBounds(125, 52, 100, 20);
-		formulario.add(nombreT);
+		panelForm.add(nombreT);
 		nombreT.setColumns(10);
 		
 		apellidoT = new JTextField();
 		apellidoT.setBounds(125, 107, 100, 20);
-		formulario.add(apellidoT);
+		panelForm.add(apellidoT);
 		apellidoT.setColumns(10);
 		
 		dniT = new JTextField();
 		dniT.setBounds(125, 162, 100, 20);
-		formulario.add(dniT);
+		panelForm.add(dniT);
 		dniT.setColumns(10);
 		
 		sueldoT = new JTextField();
 		sueldoT.setBounds(125, 217, 100, 20);
-		formulario.add(sueldoT);
+		panelForm.add(sueldoT);
 		sueldoT.setColumns(10);
 		
-		formulario.setBackground(Color.gray);
+		panelForm.setBackground(Color.gray);
 		
 		//empieza lista:
-		lista = new JPanel(null);
+		panelLista = new JPanel(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(45, 11, 180, 260);
-		lista.add(panel);
+		panelLista.add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		listModel = new DefaultListModel();
@@ -100,16 +100,16 @@ public class VistaEmp extends JPanel {
 
 		info = new JButton("+ INFO");
 		info.setBounds(45, 295, 80, 23);
-		lista.add(info);
+		panelLista.add(info);
 
 		eliminar = new JButton("Eliminar");
 		eliminar.setBounds(145, 295, 80, 23);
-		lista.add(eliminar);
+		panelLista.add(eliminar);
 
-		lista.setBackground(Color.gray);
+		panelLista.setBackground(Color.gray);
 		
-		add(formulario);
-		add(lista);
+		add(panelForm);
+		add(panelLista);
 		
 	}
 	
