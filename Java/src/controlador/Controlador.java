@@ -69,17 +69,21 @@ public class Controlador implements ActionListener {
 		nombre = empV.getNombre();
 		apellido = empV.getApellido();
 		dni = empV.getDni();
-		//comprobarDni(dni);
-		try{
-			sueldo = Float.valueOf(empV.getSueldo());
-		}catch(NumberFormatException e){
-			JOptionPane.showMessageDialog(null, "error: Sueldo no es un numero.\n"
-			, "Error", JOptionPane.ERROR_MESSAGE);
-			empV.sueldoT.setText("");
-			return;
+		if (comprobarDni(dni)){
+			try{
+				sueldo = Float.valueOf(empV.getSueldo());
+			}catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "error: Sueldo no es un numero.\n"
+				, "Error", JOptionPane.ERROR_MESSAGE);
+				empV.sueldoT.setText("");
+				return;
+			}
+			String operacion = "INSERT INTO empleado VALUES('"+dni+"','"+nombre+"','"+apellido+"','"+sueldo+"',null);";
+			fun.actualizar(operacion);
+		}else{
+			JOptionPane.showMessageDialog(null, "error: Dni ya registrado.\n"
+					, "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		String operacion = "INSERT INTO empleado VALUES('"+dni+"','"+nombre+"','"+apellido+"','"+sueldo+"',null);";
-		fun.actualizar(operacion);
 		actualizarEmp();
 		actualizarGru();
 		empV.limpiar();
@@ -236,6 +240,24 @@ public class Controlador implements ActionListener {
 			}
 		}catch(SQLException e){}
 		return dni;
+	}
+	private boolean comprobarDni(String dni){
+		boolean aux = false;
+		String dniCap;
+		ResultSet resultado;
+		try{
+			resultado = fun.consultar("SELECT dni FROM empleado");
+			while(resultado.next()){
+				dniCap = resultado.getString("dni");
+				if (dniCap.equals(dni)){
+					return aux;
+				}
+			}	
+			aux = true;
+		}catch(SQLException e){
+			
+		}
+		return aux;
 	}
 	private int proCod(){
 		int cod = 1;
