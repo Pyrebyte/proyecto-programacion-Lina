@@ -44,6 +44,9 @@ public class Controlador implements ActionListener {
 		if (e.getSource() == proV.info){
 			proyectoInfo(proV.list.getSelectedIndex());
 		}
+		if (e.getSource() == gruV.crearGrupo){
+			grupoCrear();
+		}
 	}
 	
 	public Controlador(VistaEmp emp , VistaGru gru , VistaPro pro) {
@@ -52,11 +55,11 @@ public class Controlador implements ActionListener {
 		this.proV = pro;
 		this.fun = new FuncionesDB();
 		emp.registrarControlador(this);
+		gru.registrarControlador(this);
+		pro.registrarControlador(this);
 		actualizarEmp();
 		actualizarPro();
 		actualizarGru();
-		//gru.registrarControlador(this);
-		pro.registrarControlador(this);
 	}
 	
 	
@@ -131,7 +134,6 @@ public class Controlador implements ActionListener {
 		fun.actualizar(operacion);
 		actualizarPro();
 		proV.limpiar();
-		
 	}
 
 	private void proyectoDel(int index){
@@ -162,6 +164,9 @@ public class Controlador implements ActionListener {
 		JOptionPane.showMessageDialog(null, info);
 	}
 	
+	private void grupoCrear(){
+		
+	}
 	
 	//metodos internos:
 	private void actualizarEmp(){
